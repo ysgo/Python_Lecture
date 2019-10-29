@@ -7,10 +7,10 @@
     <title>Document</title>
 </head>
 <body>
-    {% if today.day == 23 and today.month == 10 %}
-        <h1>Happy Birthday~</h1>
-    {% else %}
-        <h1>Study Hard!!</h1>
-    {% endif %}
+    <form action="/home/catch/">
+        던질 것: <input type="text" name="message">
+        하나 더: <input type="text" name="message2">
+        <input type="submit">
+    </form>
 </body>
 </html>
