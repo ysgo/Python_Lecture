@@ -3,8 +3,10 @@
 
 ## Add ignore
 *.exe
-venv/
 *.env
+venv/
+.windows_venv/
+.ubuntu_venv/
 
 # Created by https://www.gitignore.io/api/python,django,jupyternotebooks,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=python,django,jupyternotebooks,visualstudiocode
