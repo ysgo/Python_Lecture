@@ -1,0 +1,43 @@
+{% extends 'movies/base.html' %}
+
+{% block title %}NEW{% endblock %}
+{% block body %}
+    <br>
+    <a href="{% url 'movies:main' %}">[영화 목록]</a>
+    <div class="container">
+        <h1 class='text-center'>영화 정보 생성</h1>
+        <hr>
+        <form action="{% url 'movies:create' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                제목 : <input type="text" class="form-control" id="usr" name="title">
+            </div>
+            <div class="form-group">
+                제목(영문) : <input type="text" class="form-control" id="usr" name="title_en">
+            </div>
+            <div class="form-group">
+                    관람객 : <input type="number" class="form-control" id="usr" name="audience">
+            </div>
+            <div class="form-group">
+                    개봉일 : <input type="date" class="form-control" id="usr" name="open_date">
+            </div>
+            <div class="form-group">
+                    장르 : <input type="text" class="form-control" id="usr" name="genre">
+            </div>
+            <div class="form-group">
+                    연령대 : <input type="text" class="form-control" id="usr" name="watch_grade">
+            </div>
+            <div class="form-group">
+                    점수 : <input type="number" class="form-control" id="usr" step="0.01" name="score">
+            </div>
+            <div class="form-group">
+                    URL : <input type="text" class="form-control" id="usr" name="poster_url">
+            </div>
+            <div class="form-group">
+                    줄거리 : <textarea name="description" class="form-control" id="usr" cols="50" rows="10"></textarea>
+            </div>
+            <input type="submit" class="btn btn-primary" value="추가하기">
+        </form>
+        <hr>
+    </div>
+{% endblock %}
