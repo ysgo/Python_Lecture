@@ -116,7 +116,7 @@ url = f'{base}/bot{token}/setWebhook?url=https://0660d15b.ngrok.io/{token}'
   - RDBMS(관계혀데이터베이스 관리 시스템)
     - 관계형 기반으로하는 데이터베이스 관리시스템
       - 오라클
-      - 마이SQL
+      - MySQL
       - SQLite
   - 스키마(scheme)
     - 데이터베이스에서 자료의 구조, 표현방법, 관계등을 정의한 구조
@@ -215,32 +215,36 @@ url = f'{base}/bot{token}/setWebhook?url=https://0660d15b.ngrok.io/{token}'
     ```shell
     # 역순으로 뽑기
     >>> articles = Article.objects.order_by('-pk')
-    >>> article #확인
+    >>> article
     
     # 2번째 3번째 뽑아내기
     >>> articles = Article.objects.all()[1:3]
-    >>> articles #확인
+    >>> articles
     
     # title에 'fir'이 들어가있는거 뽑아내기
     >>> articles = Article.objects.filter(title__contains='fir')
-    >>> articles #확인
+    >>> articles
     
     # title에 f가 들어가 있는거 뽑기
     >>> articles = Article.objects.filter(title__startswith='f')
-    >>> articles #확인
+    >>> articles
     ```
 
   - 지우기(delete)
 
     ```shell
-    >>> article = Article.objects.get(pk=5)
+    >>> article = Article.objects.get(pk=[선택 pk 번호])
     >>> article.delete()
     ```
 
 - 관리자 지정하기
 
   ```bash
-  $ python manage.py createsuperuser #쓰고 아이디 지정하고 이메일은 안써도됨 비밀번호 치고 y
+  $ python manage.py [createsuperuser] 
+  > 아이디 설정(선택: default값 존재)
+  > 이메일 설정(선택)
+  > 비밀번호 설정
+  > y(완료)
   ```
 
 - 관리자 설정
@@ -256,13 +260,13 @@ url = f'{base}/bot{token}/setWebhook?url=https://0660d15b.ngrok.io/{token}'
     admin.site.register(Article, ArticleAdmin)
     ```
 
-- django-extensions(from import를 안해줘도됨)
+- django-extensions
 
 ```bash
-# install해준다.
+# django shell을 실행하기 위해 install해준다.
 $ pip install django-extensions 
 # settings에서 'django_extensions'를 INSTALLED_APPS에 추가해준다
-# shell_plus로 가동
+# shell_plus로 가동(from import를 안해줘도 자동으로 모두 import)
 $ python manage.py shell_plus
 ```
 
