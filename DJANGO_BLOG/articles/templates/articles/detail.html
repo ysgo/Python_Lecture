@@ -1,4 +1,5 @@
 {% extends 'articles/base.html' %}
+{% load static %}
 
 {% block title %}DETAIL{% endblock %}
 {% block body %}
@@ -7,8 +8,13 @@
     <hr>
     <p>제목: {{ article.title }}</p>
     <p>내용: {{ article.content }}</p>
-    <p>작성시간: {{ article.created_at }}</p>
-    <p>수정시간: {{ article.updated_at }}</p>
+    {% if article.image %}
+    <p>이미지: <img src="{{ article.image.url }}" alt="{{ article.image }}" width="25%"></p>
+    {% else %}
+    <p>이미지: <img src="{% static 'articles/images/No.jpg' %}" alt="{{ no_image }}" width="5%"></p>
+    {% endif %}
+    <p>작성시간: {{ article.create_at }}</p>
+    <p>수정시간: {{ article.update_at }}</p>
     <hr>
     <form action="{% url 'articles:comment_create' article.id %}", method="POST">
         {% csrf_token %}

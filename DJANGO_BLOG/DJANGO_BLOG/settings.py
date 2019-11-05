@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    
+    'imagekit',
     'django_extensions',
 ]
 
@@ -123,4 +124,14 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/' # 웹 페이지에서 사용할 정적 파일의 최상우 URL 경로(실제 파일이 위치한 디렉토리는 아님)
+
+STATICFILES_DIRS = [    # 정적 파일이 위치한 경로
+    # 쉼표(,)를 빠뜨리게 되면 에러가 납니다. django_blog/assets/ 로 가서 정적 파일이 있는지 찾는다.
+    os.path.join(BASE_DIR, 'DJANGO_BLOG', 'assets', ) 
+]
+
+# STATIC_URL과 비슷, 업로드된 파일의 주소(URL)을 만들어 줌(실제 이미지 파일이 업로드 된 디렉토리를 의미하는 것은 아님)
+MEDIA_URL = '/media/' 
+# STATICFILES_DIRS 동일한 기능, 정적 파일의 업로드가 끝나면 파일이 어디에 저장될 지를 설정하는 경로
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
