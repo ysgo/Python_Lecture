@@ -7,9 +7,9 @@ class GenreAdmin(admin.ModelAdmin):
 admin.site.register(Genre, GenreAdmin)
 
 class MovieAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title', 'audience', 'postser_url', 'description', 'genre_id')
+    list_display = ('pk', 'title', 'audience', 'poster_url', 'description', 'genre_id')
 
-admin.site.registesr(Movie, MovieAdmin)
+admin.site.register(Movie, MovieAdmin)
 
 class ScoreAdmin(admin.ModelAdmin):
     list_display = ('pk', 'content', 'score', 'movie_id')

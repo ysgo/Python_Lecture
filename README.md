@@ -287,3 +287,73 @@ $ python manage.py shell_plus
    - GET
    - POST
    - PUT/PATCH
+
+## [D10] 191101
+
+- Django CRUD 종합실습(Movie app)
+
+## [D11] 191104
+
+- Django 1:N Intro
+  - comment_create
+  - comment_delete
+
+### 댓글 기능
+
+1. models.py(Comment클래스 추가)
+
+   ```python
+   class Comment(models.Model):
+       content = models.CharField(max_length=300) #댓글
+       created_at = models.DateTimeField(auto_now_add=True) #댓글 생성 날짜
+       article = models.ForeignKey(Article, on_delete=models.CASCADE)
+       #article클래스 외래키 설정(연결시키는거)
+   ```
+
+2. admin.py
+
+   ```python
+   class CommentAdmin(admin.ModelAdmin):
+       list_display = ('id','content','created_at','article_id')
+   ```
+
+3. shell
+
+   ```python
+   # article을 pk에 맞게 불러온다
+   article = Article.objects.get(pk=2)
+   
+   # comment를 만들어준다
+   comment=Comment()
+   
+   # comment의 값을 넣어준다
+   comment.content='first comment' -> 방법1
+   comment = Comment(article=article, content='second comment') -> 방법2
+   
+   # comment에 article을 연결
+   comment.article=article
+   
+   # comment의 맞는 article글 찾는 방법
+   comment.article
+   
+   # article의 comment불러오기(comment는 여러개이므로 전체를 불러와야함)
+   article.comment_set.all()
+   ```
+
+## [D10] 191105
+
+1. 이미지 파일 넣기
+
+```bash
+# 이미지처리
+$ pip install pillow
+
+파일을 보낼려고 할 때 form태그에 enctype을 해줘야한다.
+Ex) enctype="multipart/form-data"
+
+# PIL, Pillow를 좀 더 쓰기 쉽도록 도와주는 라이브러리
+$ pip install pilkit
+
+# django를 안써주면 일반imagekit랑 2개가 install되서 충돌난다
+$ pip install django-imagekit
+```
