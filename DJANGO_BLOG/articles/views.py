@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Article, Comment
+from .forms import ArticleForm, CommentForm
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     articles = Article.objects.order_by('-pk')
@@ -9,6 +12,7 @@ def index(request):
 # def new(request):
 #     return render(request, 'articles/new.html')
 
+@login_required
 def create(request):
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -20,7 +24,7 @@ def create(request):
     else:
         return render(request, 'articles/new.html')
 
-
+@require_POST
 def detail(request, article_id):
     article = Article.objects.get(pk=article_id)
     comments = article.comment_set.all()
@@ -38,6 +42,7 @@ def delete(request, article_id):
 #     article = Article.objects.get(pk=pk)
 #     return render(request, 'articles/edit.html', {'article':article})
 
+@login_required
 def update(request, article_id):
     article = Article.objects.get(pk=article_id)
     if request.method == 'POST':
@@ -49,18 +54,22 @@ def update(request, article_id):
     else:
         return render(request, 'articles/edit.html', {'article':article})
 
+@require_POST
 def comment_create(request, article_id):
     article = Article.objects.get(pk=article_id)
-    if request.method == 'POST':
-        comment = Comment()
-        comment.content = request.POST.get('content')
-        comment.article = article
-        comment.save()
+    Comment_form = CommentForm(request.POST)
+    # if request.method == 'POST':
+    #comment = Comment()
+    #comment.content = request.POST.get('content')
+    comment = comment_form.save(commit=False)
+    comment.article = article
+    comment.save()
     #     return redirect('articles:detail', article.id)
     # else:
     #     return redirect('articles:detail', article_id)
     return redirect('articles:detail', article_id)
 
+@require_POST
 def comment_delete(request, article_id, comment_id):
     if request.method == 'POST':
         comment = Comment.objects.get(pk=comment_id)

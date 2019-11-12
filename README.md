@@ -342,18 +342,55 @@ $ python manage.py shell_plus
 
 ## [D10] 191105
 
-1. 이미지 파일 넣기
+- Django Static Image Upload
 
-```bash
-# 이미지처리
-$ pip install pillow
+  - 이미지 파일 넣기
 
-파일을 보낼려고 할 때 form태그에 enctype을 해줘야한다.
-Ex) enctype="multipart/form-data"
+    ```bash
+    # 이미지처리
+    $ pip install pillow
+    
+    파일을 보낼려고 할 때 form태그에 enctype을 해줘야한다.
+    Ex) enctype="multipart/form-data"
+    
+    # PIL, Pillow를 좀 더 쓰기 쉽도록 도와주는 라이브러리
+    $ pip install pilkit
+    
+    # django를 안써주면 일반imagekit랑 2개가 install되서 충돌난다
+    $ pip install django-imagekit
+    ```
 
-# PIL, Pillow를 좀 더 쓰기 쉽도록 도와주는 라이브러리
-$ pip install pilkit
+- Django Media Image Upload
+  - Resize Image Upload (Win7 OSError > Win10 or Mac recommend)
 
-# django를 안써주면 일반imagekit랑 2개가 install되서 충돌난다
-$ pip install django-imagekit
-```
+## [D13] 191106
+
+- Django 1:N 실습(Genre/Movie/Score)
+- Favicon
+- Django Form
+  - get_object_or_404
+
+## [D14] 191107
+
+- 2차 아이디어톤 준비
+
+## [D15] 191108 - 2차 아이디어톤
+
+- GoldenHour (실시간 응급실 가용병상 조회 서비스) - 최영선, 전지나, 오현경
+- 사자매 (의약품 주의사항 정보 제공 서비스) - 이영걸, 윤현수, 경현, 호유송
+- Our Kitchen (공유주방 플랫폼) - 이민우, 김소미, 강다영
+- 5인용 (집 밖은 위험해) - 설동재, 고예성, 박건호, 박찬우, 홍성재
+
+## [D16] 191111
+
+- Django 1:N 실습 풀이
+- Django form class review
+- Django ModelForm
+  - request.resolver_match.url_name
+  - bootstrap_form
+
+## [D17] 191112
+
+- Django ModelForm review
+- Django Authentication
+  - Signup / Login / Logout / Quit
