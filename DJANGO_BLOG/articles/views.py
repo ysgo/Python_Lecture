@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Article, Comment
 from .forms import ArticleForm, CommentForm
 from django.views.decorators.http import require_POST
@@ -15,28 +15,39 @@ def index(request):
 @login_required
 def create(request):
     if request.method == 'POST':
-        title = request.POST.get('title')
-        content = request.POST.get('content')
-        image = request.FILES.get('image')
-        article = Article(title=title, content=content, image=image)
-        article.save()
-        return redirect('articles:detail', article.pk)
+        form = ArticleForm(request.POST, request.FILES)
+        if form.is_valid():
+            article = form.save(commit=False)
+            article.user = request.user
+            article.save()
+            # title = request.POST.get('title')
+            # content = request.POST.get('content')
+            # image = request.FILES.get('image')
+            # article = Article(title=title, content=content, image=image)
+            # article.save()
+            return redirect('articles:detail', article.id)
     else:
         return render(request, 'articles/new.html')
 
-@require_POST
+# @require_POST
 def detail(request, article_id):
-    article = Article.objects.get(pk=article_id)
+    # article = Article.objects.get(pk=article_id)
+    article = get_object_or_404(Article, pk=article_id)
     comments = article.comment_set.all()
-    return render(request, 'articles/detail.html', {'article':article, 'comments':comments})
+    comment_form = CommentForm()
+    return render(request, 'articles/detail.html', {'article':article, 'comments':comments, 'comment_form':comment_form})
 
+@login_required
+@require_POST
 def delete(request, article_id):
-    article = Article.objects.get(pk=article_id)
-    if request.method == 'POST':
+    # article = Article.objects.get(pk=article_id)
+    # if request.method == 'POST':
+    article = get_object_or_404(Article, pk=article_id)
+    if article.user == request.user:
         article.delete()
-        return redirect('articles:index')
-    else:
-        return redirect('articles:detail', article.pk)
+    return redirect('articles:index')
+    # else:
+    #     return redirect('articles:detail', article.pk)
 
 # def edit(request, pk):
 #     article = Article.objects.get(pk=pk)
@@ -45,19 +56,27 @@ def delete(request, article_id):
 @login_required
 def update(request, article_id):
     article = Article.objects.get(pk=article_id)
-    if request.method == 'POST':
-        article.title = request.POST.get('title')
-        article.content = request.POST.get('content')
-        article.image = request.FILES.get('image')
-        article.save()
-        return redirect('articles:detail', article.pk)
+    if article.user == request.user:
+        if request.method == 'POST':
+            form = ArticleForm(request.POST, request.FILES, instance=article)
+            if form.is_valid():
+                article = form.save()
+                return redirect('articles:detail', article.id)
+            # article.title = request.POST.get('title')
+            # article.content = request.POST.get('content')
+            # article.image = request.FILES.get('image')
+            # article.save()
+        else:
+            form = ArticleForm(instance=article)
     else:
-        return render(request, 'articles/edit.html', {'article':article})
+        return redirect('articles:index')
+    return render(request, 'articles/form.html', {'form':form, 'article':article})
 
 @require_POST
 def comment_create(request, article_id):
-    article = Article.objects.get(pk=article_id)
-    Comment_form = CommentForm(request.POST)
+    # article = Article.objects.get(pk=article_id)
+    article = get_object_or_404(Article, pk=article_id)
+    comment_form = CommentForm(request.POST)
     # if request.method == 'POST':
     #comment = Comment()
     #comment.content = request.POST.get('content')
