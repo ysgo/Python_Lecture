@@ -80,17 +80,32 @@ def comment_create(request, article_id):
     # if request.method == 'POST':
     #comment = Comment()
     #comment.content = request.POST.get('content')
-    comment = comment_form.save(commit=False)
-    comment.article = article
-    comment.save()
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
+        comment.article = article
+        comment.user = request.user
+        comment.save()
+    return redirect('articles:detail', article_id)
     #     return redirect('articles:detail', article.id)
     # else:
     #     return redirect('articles:detail', article_id)
+
+@login_required
+def comment_delete(request, article_id, comment_id):
+    # if request.method == 'POST':
+    comment = Comment.objects.get(pk=comment_id)
+    comment.delete()
     return redirect('articles:detail', article_id)
 
-@require_POST
-def comment_delete(request, article_id, comment_id):
-    if request.method == 'POST':
-        comment = Comment.objects.get(pk=comment_id)
-        comment.delete()
-    return redirect('articles:detail', article_id)
+@login_required
+def like(request, article_id):
+    article = get_object_or_404(Article, pk=article_id)
+    user = request.user
+    # 해당 게시글에 좋아요를 누른 사람들 중에서 user.id(현재 접속유저의 id)를 가진 user가 존재하면
+    if article.like_users.filter(pk=user.id).exists():
+        # user를 삭제한다(좋아요를 취소)
+        article.like_users.remove(user)
+    else:
+        # user가 존재하지 않는다면 user를 추가한다.
+        article.like_users.add(user)
+    return redirect('articles:index')

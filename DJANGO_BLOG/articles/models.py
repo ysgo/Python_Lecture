@@ -16,6 +16,7 @@ class Article(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_articles', blank=True)
 
     def __str__(self):
         return f'{self.id}번 글 = {self.title} : {self.content}'
@@ -24,6 +25,7 @@ class Comment(models.Model):
     content = models.CharField(max_length=200)
     create_at = models.DateTimeField(auto_now_add=True)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'<Article({self.article_id}) : Comment({self.id})> - {self.content}'

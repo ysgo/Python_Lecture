@@ -75,6 +75,18 @@ url = f'{base}/bot{token}/setWebhook?url=https://0660d15b.ngrok.io/{token}'
    path('match/', views.match) 
    #앞에는 url주소, 뒤에는 views의 값
    ```
+   
+4. requirements.txt 생성
+
+   ```bash
+   $ pip freeze > requirements.txt
+   ```
+
+5. requirements.txt로 pip 라이브러리 설치
+
+   ```bash
+   $ pip  install -r requirements.txt
+   ```
 
 ## [D05] 191025 - 아이디어톤
 
@@ -361,6 +373,7 @@ $ python manage.py shell_plus
     ```
 
 - Django Media Image Upload
+  
   - Resize Image Upload (Win7 OSError > Win10 or Mac recommend)
 
 ## [D13] 191106
@@ -394,3 +407,23 @@ $ python manage.py shell_plus
 - Django ModelForm review
 - Django Authentication
   - Signup / Login / Logout / Quit
+
+## [D18] 191113
+
+- Webpage Designing(Bootstrap)
+- Django Authentication
+  - Edit / Password
+  - template: auth_form
+  - Model: article.user
+
+## [D19] 191114
+
+- Django Authentication
+  - comment.user
+- Django Model Relation
+  - 1:N (Article:Comment / User:Article / User:Comment)
+  - M:N (User:Article[Like] / User:User[Following/Follower]) Logic
+
+## [D20] 191115
+
+- Django ModelForm, 1:N, Auth 종합실습(Movie / Rating)
