@@ -36,7 +36,7 @@
     <ul>
         <li>
             {{ comment.content }}
-            {% if article.user == request.user %}
+            {% if user == comment.user %}
             <form action="{% url 'articles:comment_delete' article.id comment.id %}" style="display: inline;" method="POST">
                 {% csrf_token %}
                 <button class="btn btn-warning btn-sm">X</button>
@@ -47,6 +47,8 @@
     {% empty %}
     <p>댓글이 아직 없습니다.</p>
     {% endfor %}
+    <hr>
+        {% include 'articles/_follow.html' %}
     <hr>
     {% if article.user == request.user %}
     <a href="{% url 'articles:update' article.pk %}" class="btn btn-primary" style="display:inline;">수정</a>

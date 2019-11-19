@@ -46,7 +46,15 @@ INSTALLED_APPS = [
     'imagekit',
     'django_extensions',
     'bootstrap4',
+
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.kakao',
 ]
+
+SITE_ID = 1 # 사이트 아이디 기본값
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -137,3 +145,7 @@ STATICFILES_DIRS = [    # 정적 파일이 위치한 경로
 MEDIA_URL = '/media/' 
 # STATICFILES_DIRS 동일한 기능, 정적 파일의 업로드가 끝나면 파일이 어디에 저장될 지를 설정하는 경로
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+AUTH_USER_MODEL = 'accounts.User'   # 기본값 : 'accounts.User'
+
+LOGIN_REDIRECT_URL = 'articles:index'   # 기본값 : 'accounts:index'
